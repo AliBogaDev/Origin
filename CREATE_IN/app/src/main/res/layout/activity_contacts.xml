@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_acqua"
+    android:background="@color/ice_blue"
     tools:context=".Contacts">
 
     <ImageView
         android:id="@+id/image_decoration"
         android:layout_width="420dp"
         android:layout_height="100dp"
-        android:src="@drawable/fondocontacts"
+        android:background="@color/skyline_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -26,7 +26,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginRight="100dp"
         android:hint="Click para compartir"
-        android:textColor="@color/black"
+        android:textColor="@color/deep_navy"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="84dp"
         android:src="@drawable/icons8_whatsapp_48"
-        android:background="@color/blue_acqua"
+        android:background="@color/ice_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toEndOf="@id/message"

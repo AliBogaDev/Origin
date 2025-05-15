@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/blue_acqua">
+    android:background="@color/ice_blue">
 
     <TextView
         android:id="@+id/textCodigoBarra"
@@ -15,7 +15,7 @@
         android:layout_marginTop="200dp"
         android:gravity="center"
         android:text="Introducir número de codigo de barras"
-        android:textColor="@color/black"
+        android:textColor="@color/deep_navy"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
         android:layout_marginTop="20dp"
         android:hint=" Número de  codigo de barras "
         android:textSize="20dp"
-        android:backgroundTint="@color/blue_ligth"
+        android:backgroundTint="@color/ice_blue"
         android:background="@drawable/redondear"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,15 +39,16 @@
         android:id="@+id/button_validate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Validar código"
-        android:textColor="@color/black"
-        android:layout_marginTop="35dp"
-        android:textStyle="bold"
-        android:textSize="15dp"
-        android:backgroundTint="@color/blue_gen"
+        android:layout_marginTop="32dp"
         android:background="@drawable/redondear"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/deep_navy"
+        android:text="Validar"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rellenable"/>
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rellenable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
