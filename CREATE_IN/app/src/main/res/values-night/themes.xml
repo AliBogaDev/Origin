@@ -1,10 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CREATEINN" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your dark theme here. -->
-        <item name="colorPrimary">@color/ice_blue</item>
+    <style name="Base.Theme.Origin" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Mi estilo de cabecera con tema diurno . -->
+        <item name="colorPrimary">@color/deep_navy</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
-    <style name="Theme.CREATEINN" parent="Base.Theme.CREATEINN" />
+    <style name="Theme.Origin" parent="Base.Theme.Origin" />
 
 </resources>

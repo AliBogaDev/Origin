@@ -8,16 +8,6 @@
     android:background="@color/ice_blue"
     tools:context=".Contacts">
 
-    <ImageView
-        android:id="@+id/image_decoration"
-        android:layout_width="420dp"
-        android:layout_height="100dp"
-        android:background="@color/skyline_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-
 
     <EditText
         android:id="@+id/message"
@@ -31,7 +21,8 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/image_decoration" />
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
     <ImageButton
         android:id="@+id/send_information"
@@ -42,9 +33,10 @@
         android:src="@drawable/icons8_whatsapp_48"
         android:background="@color/ice_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.589"
-        app:layout_constraintStart_toEndOf="@id/message"
-        app:layout_constraintTop_toBottomOf="@id/image_decoration" />
+        app:layout_constraintEnd_toStartOf="@id/message"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

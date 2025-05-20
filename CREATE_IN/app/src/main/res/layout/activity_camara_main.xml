@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/ice_blue"
     tools:context=".CamaraMain">
+    <!--En background es el fondo general de la pnatalla-->
 
-
-    <ImageView
+<ImageView
         android:id="@+id/image"
         android:layout_width="83dp"
         android:layout_height="100dp"
@@ -68,13 +68,14 @@
         android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="120dp"
         android:gravity="center"
         android:hint="País"
         android:textColor="@color/deep_navy"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/factured_place" />
 

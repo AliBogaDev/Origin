@@ -1,10 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CREATEINN" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/skyline_blue</item>
+    <style name="Base.Theme.Origin" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Personaliza el color primario -->
+        <item name="colorPrimary">@color/deep_navy</item>
+        <item name="colorPrimaryDark">@color/deep_navy</item>
+        <item name="colorAccent">@color/ice_blue</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
-    <style name="Theme.CREATEINN" parent="Base.Theme.CREATEINN" />
+    <!-- Tema principal usado por la app -->
+    <style name="Theme.Origin" parent="Base.Theme.Origin" />
 
-  </resources>
+    <!-- Tema exclusivo para el Splash con fondo azul -->
+    <style name="Theme.Origin.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@color/ice_blue</item>
+    </style>
+</resources>

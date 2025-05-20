@@ -41,31 +41,26 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CamaraMain extends AppCompatActivity {
-   FloatingActionButton main_button;
-    FloatingActionButton capture;
+   FloatingActionButton main_button, capture;
+
     EditText result;
-    TextView label_name;
-    TextView name;
-    TextView factured;
-    TextView country;
-    ImageView image;
+    TextView label_name, name, factured, country;
     Context context=this;
-    ImageView unknown;
+    ImageView unknown, image;
     String infoProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_main);
-
         main_button=findViewById(R.id.button_to_go_hand);
         capture = findViewById(R.id.capture_Image);
-
         result= findViewById(R.id.result);
         name= findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
         country= findViewById(R.id.country);
         image= findViewById(R.id.image);
         label_name= findViewById(R.id.label_name);
+
 
 
 
