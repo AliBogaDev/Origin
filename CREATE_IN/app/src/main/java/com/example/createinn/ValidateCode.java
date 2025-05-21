@@ -108,7 +108,7 @@ public class ValidateCode extends AppCompatActivity {
                                     String imageFrontUrl = product.get("image_thumb_url").getAsString();
                                     Glide.with(context)
                                             .load(imageFrontUrl)
-                                            .placeholder(R.drawable.ic_launcher_background)
+                                            .placeholder(R.drawable.camara)
                                             .into(image);
                                 }
                             } catch (Exception e) {

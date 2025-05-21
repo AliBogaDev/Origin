@@ -41,7 +41,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class CamaraMain extends AppCompatActivity {
-   FloatingActionButton main_button, capture;
+    FloatingActionButton main_button, capture;
 
     EditText result;
     TextView label_name, name, factured, country;
@@ -64,7 +64,7 @@ public class CamaraMain extends AppCompatActivity {
 
 
 
-/*boton para saltar a validar codigo*/
+        /*boton para saltar a validar codigo*/
         main_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +72,7 @@ public class CamaraMain extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-/*boton para abrir camara*/
+        /*boton para abrir camara*/
         capture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,24 +134,24 @@ public class CamaraMain extends AppCompatActivity {
                                             Intent intent = new  Intent(CamaraMain.this,UnknownProduct.class);
                                             startActivity(intent);
                                         } else{
-                                        /*Aquí leo los datos que voy a mostrar del json obtenido por la lectura del codigo de barras*/
-                                        String names = product.get("brands").getAsString();
-                                        label_name.setText(names);
+                                            /*Aquí leo los datos que voy a mostrar del json obtenido por la lectura del codigo de barras*/
+                                            String names = product.get("brands").getAsString();
+                                            label_name.setText(names);
 
-                                        String productName = product.get("product_name").getAsString();
-                                        name.setText(productName);
+                                            String productName = product.get("product_name").getAsString();
+                                            name.setText(productName);
 
-                                        String manufacturingPlaces = product.get("manufacturing_places").getAsString();
-                                        factured.setText(manufacturingPlaces);
+                                            String manufacturingPlaces = product.get("manufacturing_places").getAsString();
+                                            factured.setText(manufacturingPlaces);
 
-                                        String countries = product.get("countries").getAsString();
-                                        country.setText(countries);
+                                            String countries = product.get("countries").getAsString();
+                                            country.setText(countries);
 
-
+                                            /*Esto es para que muestre primero la imagen de la camara si no existe la foto*/
                                             String imageFrontUrl = product.get("image_thumb_url").getAsString();
                                             Glide.with(context)
                                                     .load(imageFrontUrl)
-                                                    .placeholder(R.drawable.ic_launcher_background)
+                                                    .placeholder(R.drawable.camara)
                                                     .into(image);
 
                                             infoProduct = "Etiqueta: " + label_name.getText().toString();

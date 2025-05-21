@@ -6,13 +6,13 @@
         android:id="@+id/camera"
         android:title="Camara"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/baseline_add_a_photo_24"
+        android:icon="@drawable/camara"
         />
 
         <item
         android:id="@+id/share"
         android:title="Compartir"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/baseline_share_24"
+        android:icon="@drawable/compartir"
         />
 </menu>

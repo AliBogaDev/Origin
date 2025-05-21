@@ -33,7 +33,7 @@
         android:src="@drawable/icons8_whatsapp_48"
         android:background="@color/ice_blue"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/message"
+
         app:layout_constraintTop_toTopOf="parent"
 
         />
