@@ -7,120 +7,182 @@
     android:layout_height="match_parent"
     android:background="@color/ice_blue"
     tools:context=".CamaraMain">
-    <!--En background es el fondo general de la pnatalla-->
 
-<ImageView
+    <!-- Imagen centrada en la parte superior -->
+    <ImageView
         android:id="@+id/image"
         android:layout_width="83dp"
         android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/spain"
+        android:src="@drawable/no_image"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp" />
 
+    <!-- Etiqueta -->
     <TextView
         android:id="@+id/label_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:hint="Etiqueta"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/image" />
 
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/label_name"
+        android:layout_marginStart="16dp" />
+
+    <!-- Nombre del producto -->
     <TextView
         android:id="@+id/name_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:hint="Nombre"
+        android:hint="Nombre del producto"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/label_name" />
 
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textName_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/name_product"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Lugar de fabricación -->
     <TextView
         android:id="@+id/factured_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:hint="Lugar de fabricación"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/name_product" />
 
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textLugarFabricación"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hecho en: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/factured_place"
+        android:layout_marginStart="16dp"/>
 
+    <!-- País -->
     <TextView
         android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:hint="País"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/factured_place" />
 
-    <EditText
-        android:id="@+id/result"
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="País: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/country"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Resultado del código de barras -->
+    <EditText
+        android:id="@+id/result"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:layout_marginBottom="24dp"
         android:gravity="center"
-        android:hint="Numero del codigo de barras"
+        android:hint="Número del código de barras"
         android:textColor="@color/deep_navy"
-        android:textSize="30dp"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/capture_Image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/country" />
+
+    <ImageView
+        android:id="@+id/barcode_image"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/country" />
+
+    <!-- Botones en la parte inferior -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/capture_Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/camara"
+        android:backgroundTint="@color/deep_navy"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_to_go_hand"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="16dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_to_go_hand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="90dp"
-        android:layout_marginBottom="96dp"
-        android:backgroundTint="@color/deep_navy"
-        android:maxWidth="50dp"
-        android:maxHeight="50dp"
         android:src="@drawable/ic_stat_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/capture_Image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="150dp"
-        android:layout_marginBottom="96dp"
-        android:background="@color/skyline_blue"
-        android:maxWidth="50dp"
-        android:maxHeight="50dp"
-        android:src="@drawable/camara"
         android:backgroundTint="@color/deep_navy"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintStart_toEndOf="@id/capture_Image"
+        android:layout_marginBottom="32dp"
+        android:layout_marginStart="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

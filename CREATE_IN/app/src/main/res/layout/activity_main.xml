@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="200dp"
         android:gravity="center"
-        android:text="Introducir número de codigo de barras"
+        android:text="Códig de barras"
         android:textColor="@color/deep_navy"
         android:textSize="25dp"
         android:textStyle="bold"

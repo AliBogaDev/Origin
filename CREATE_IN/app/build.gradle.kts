@@ -61,6 +61,7 @@ dependencies {
     annotationProcessor (libs.compiler.v471)
     implementation (libs.json)
     implementation (libs.material.v140)
+    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
 
 
 }
