@@ -33,7 +33,10 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 public class CamaraMain extends AppCompatActivity {
     FloatingActionButton main_button, capture;
     EditText result;
@@ -68,45 +71,37 @@ public class CamaraMain extends AppCompatActivity {
         });
 
         // Botón para abrir cámara y escanear
-        capture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IntentIntegrator intentIntegrator = new IntentIntegrator(CamaraMain.this);
-                intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-                intentIntegrator.setPrompt("Ponga el código en la ventana.");
-                intentIntegrator.setCameraId(0);
-                intentIntegrator.setOrientationLocked(false);
-                intentIntegrator.setBeepEnabled(true);
-                intentIntegrator.setCaptureActivity(CaptureActivityPosition.class);
-                intentIntegrator.initiateScan();
-            }
+        capture.setOnClickListener(v -> {
+            // 2. Launch the scanner using the launcher
+            ScanOptions options = new ScanOptions();
+            options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
+            options.setPrompt("Ponga el código en la ventana.");
+            options.setCameraId(0);
+            options.setOrientationLocked(false);
+            options.setBeepEnabled(true);
+            options.setCaptureActivity(CaptureActivityPosition.class); // para poner la camara en vertical
+            activityResultImage.launch(options);
+
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+    // 1. Define el ActivityResultLauncher
+    private final ActivityResultLauncher<ScanOptions> activityResultImage = registerForActivityResult(new ScanContract(),
+            scanResult -> {
+                if (scanResult.getContents() == null) {
+                    Toast.makeText(this, "Lectura cancelada", Toast.LENGTH_SHORT).show();
+                } else {
+                    String barcode = scanResult.getContents();
+                    result.setText(barcode);
+                    Toast.makeText(this, "Código escaneado: " + barcode, Toast.LENGTH_SHORT).show();
 
-        if (intentResult != null) {
-            if (intentResult.getContents() == null) {
-                Toast.makeText(this, "Lectura cancelada", Toast.LENGTH_SHORT).show();
-            } else {
-                String barcode = intentResult.getContents();
-                result.setText(barcode);
-                Toast.makeText(this, barcode, Toast.LENGTH_SHORT).show();
+                    // Generar imagen del código de barras
+                    generateBarcodeImage(barcode);
 
-                // Generar imagen del código de barras
-                generateBarcodeImage(barcode);
-
-                // Consultar API de Open Food Facts
-                queryProductInfo(barcode);
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
+                    // Consultar API de Open Food Facts
+                    queryProductInfo(barcode);
+                }
+            });
     private void generateBarcodeImage(String barcodeText) {
         try {
             MultiFormatWriter multiFormatWriter = new MultiFormatWriter();

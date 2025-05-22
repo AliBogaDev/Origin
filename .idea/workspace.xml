@@ -5,13 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="18f4ee91-87c9-4a90-935c-5980a52a3270" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-anydpi/camara.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-anydpi/compartir.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-hdpi/camara.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-hdpi/compartir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-mdpi/camara.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-mdpi/compartir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-xhdpi/camara.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-xhdpi/compartir.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-xxhdpi/camara.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable-xxhdpi/compartir.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/java/com/example/createinn/CamaraMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/java/com/example/createinn/CamaraMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/baseline_add_a_photo_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/baseline_add_photo_alternate_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/baseline_album_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/baseline_apps_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/baseline_share_24.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/drawable/sharp_add_circle_24.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/layout/activity_camara_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/layout/activity_camara_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values-night/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values-night/themes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/menu/main_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/menu/main_menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values/themes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CREATE_IN/app/src/main/res/values/themes.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,26 +41,26 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2x7z9kbneqfGS6oRth1RcReQBwC" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/maril/Desktop/Create_in/CREATE_IN"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
+    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/maril/Desktop/Create_in/CREATE_IN&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">

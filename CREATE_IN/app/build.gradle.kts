@@ -45,9 +45,9 @@ dependencies {
     annotationProcessor (libs.compiler.v4130)
     implementation(libs.gms.play.services.maps)
     implementation(libs.appcompat)
-    implementation("androidx.preference:preference-ktx:1.2.1")
+    implementation(libs.preference.ktx)
     implementation(libs.volley)
-    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation(libs.appcompat)
     implementation(libs.material.v1120)
     implementation(libs.constraintlayout.v221)
     androidTestImplementation(libs.espresso.core.v361)
@@ -61,7 +61,7 @@ dependencies {
     annotationProcessor (libs.compiler.v471)
     implementation (libs.json)
     implementation (libs.material.v140)
-    implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
+    implementation (libs.zxing.android.embedded.v430)
 
 
 }
