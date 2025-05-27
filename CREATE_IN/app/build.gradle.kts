@@ -62,6 +62,9 @@ dependencies {
     implementation (libs.json)
     implementation (libs.material.v140)
     implementation (libs.zxing.android.embedded.v430)
+    implementation (libs.material.v1120)
+    implementation (libs.zxing.android.embedded.v430)
+
 
 
 }

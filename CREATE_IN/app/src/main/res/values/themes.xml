@@ -15,4 +15,11 @@
     <style name="Theme.Origin.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@color/ice_blue</item>
     </style>
+    <style name="Theme.Origin.NoActionBar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/deep_navy</item>
+        <item name="colorPrimaryDark">@color/deep_navy</item>
+        <item name="colorAccent">@color/ice_blue</item>
+        <item name="android:windowBackground">@color/ice_blue</item>
+    </style>
+
 </resources>

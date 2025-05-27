@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_camara"
+        android:icon="@drawable/camara"
+        android:title="Camara" />
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/home"
+        android:title="Inicio" />
+    <item
+        android:id="@+id/nav_buscar"
+        android:icon="@drawable/ic_stat_name"
+        android:title="Buscar" />
+</menu>

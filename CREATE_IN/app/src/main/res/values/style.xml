@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="MiBottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@color/white</item> <!-- Usa el selector de color de la Opción 2 -->
+        <item name="itemTextColor">@color/white</item>
+        <!-- También puedes definir un color de fondo para el ítem activo si el tema lo permite,
+             o un color de "ripple" diferente -->
+        <!-- <item name="itemRippleColor">@color/mi_color_ripple_bottom_nav</item> -->
+        <!-- <item name="android:background">@color/fondo_del_bottom_nav</item> -->
+        <!-- <item name="itemBackground">@drawable/selector_fondo_item_bottom_nav</item> -->
+    </style>
 </resources>

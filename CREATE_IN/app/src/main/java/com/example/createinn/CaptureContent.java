@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,15 +14,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.IOException;
@@ -34,25 +30,41 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-public class CamaraMain extends AppCompatActivity {
-    FloatingActionButton main_button, capture;
+public class CaptureContent extends AppCompatActivity {
+
     EditText result;
     TextView label_name, name, factured, country;
     Context context = this;
     ImageView image, barcodeImage;
     String infoProduct;
+    BottomNavigationView bottomNavigationItemView;
+
+    private void openScanner() {
+        ScanOptions options = new ScanOptions();
+        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
+        options.setPrompt("Ponga el código en la ventana.");
+        options.setCameraId(0);
+        options.setOrientationLocked(false);
+        options.setBeepEnabled(true);
+        options.setCaptureActivity(CaptureActivityPosition.class);
+        activityResultImage.launch(options);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camara_main);
+        setContentView(R.layout.capture_content);
 
-        // Inicializar vistas
-        main_button = findViewById(R.id.button_to_go_hand);
-        capture = findViewById(R.id.capture_Image);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Escáner de productos"); // Título personalizado
+        }
+
+
+        bottomNavigationItemView = findViewById(R.id.bottom_navigation);
+        bottomNavigationItemView.setSelectedItemId(R.id.nav_camara);
         result = findViewById(R.id.result);
         name = findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
@@ -61,17 +73,37 @@ public class CamaraMain extends AppCompatActivity {
         label_name = findViewById(R.id.label_name);
         barcodeImage = findViewById(R.id.barcode_image);
 
+openScanner();
         // Botón para ir a MainActivity
-        main_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CamaraMain.this, MainActivity.class);
-                startActivity(intent);
-            }
+        bottomNavigationItemView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+                switch (itemId){
+                    case R.id.nav_home:
+                        Intent intent = new Intent(CaptureContent.this, HandValidate.class);
+                        startActivity(intent);
+                        break;
+                        case R.id.nav_buscar:
+                            Intent intent2 = new Intent(CaptureContent.this, ValidateCode.class);
+                            startActivity(intent2);
+                            break;
+                            case R.id.nav_camara:
+                                ScanOptions options = new ScanOptions();
+                                options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
+                                options.setPrompt("Ponga el código en la ventana.");
+                                options.setCameraId(0);
+                                options.setOrientationLocked(false);
+                                options.setBeepEnabled(true);
+                                options.setCaptureActivity(CaptureActivityPosition.class); // para poner la camara en vertical
+                                activityResultImage.launch(options);
+                                break;
+                }
+            return true;
         });
 
+
+
         // Botón para abrir cámara y escanear
-        capture.setOnClickListener(v -> {
+        bottomNavigationItemView.setOnClickListener(v -> {
             // 2. Launch the scanner using the launcher
             ScanOptions options = new ScanOptions();
             options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
@@ -84,7 +116,6 @@ public class CamaraMain extends AppCompatActivity {
 
         });
     }
-
     // 1. Define el ActivityResultLauncher
     private final ActivityResultLauncher<ScanOptions> activityResultImage = registerForActivityResult(new ScanContract(),
             scanResult -> {
@@ -149,7 +180,7 @@ public class CamaraMain extends AppCompatActivity {
                             JsonObject json = gson.fromJson(myResponse, JsonObject.class);
 
                             if (json.get("status").getAsInt() == 0) {
-                                Intent intent = new Intent(CamaraMain.this, UnknownProduct.class);
+                                Intent intent = new Intent(CaptureContent.this, UnknownProduct.class);
                                 startActivity(intent);
                             } else {
                                 JsonObject product = json.getAsJsonObject("product");
