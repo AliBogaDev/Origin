@@ -17,7 +17,7 @@
         android:icon="@drawable/icon_"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Origin"
+        android:theme="@style/Theme.Origin.NoActionBar"
         tools:targetApi="31" >
         <activity
             android:name=".CaptureContent"
@@ -25,7 +25,7 @@
         <activity
             android:name=".Splash"
             android:exported="false"
-            android:theme="@style/Theme.Origin.Splash" /> <!-- Pongo una flecha de retroceso a ValidateCode para que vuelva a CamaraMain() -->
+            android:theme="@style/Theme.Origin.Splash" />
         <activity
             android:name=".ValidateCode"
             android:exported="false"

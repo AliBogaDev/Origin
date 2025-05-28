@@ -31,43 +31,49 @@ android {
 
 dependencies {
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-    implementation(libs.gms.play.services.maps)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler.v4130)
-    implementation(libs.gms.play.services.maps)
-    implementation(libs.appcompat)
-    implementation(libs.preference.ktx)
-    implementation(libs.volley)
-    implementation(libs.appcompat)
-    implementation(libs.material.v1120)
-    implementation(libs.constraintlayout.v221)
-    androidTestImplementation(libs.espresso.core.v361)
-    implementation(libs.constraintlayout.v204)
-    implementation (libs.core)
-    implementation (libs.zxing.android.embedded)
-    implementation (libs.okhttp)
-    implementation (libs.picasso)
-    implementation (libs.gson)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler.v471)
-    implementation (libs.json)
-    implementation (libs.material.v140)
-    implementation (libs.zxing.android.embedded.v430)
-    implementation (libs.material.v1120)
-    implementation (libs.zxing.android.embedded.v430)
+
+
+        // Core AndroidX
+        implementation(libs.appcompat)
+        implementation(libs.material) // Elige una sola versión (ej: v1120)
+        implementation(libs.activity)
+        implementation(libs.constraintlayout) // Elige la versión más reciente que uses
+
+        // Network & JSON
+        implementation(libs.volley)
+        implementation(libs.okhttp)
+        implementation(libs.gson)
+
+        // Image loading
+        implementation(libs.glide)
+        annotationProcessor(libs.compiler) // Solo una vez
+        implementation(libs.picasso) // Si realmente usas ambos (glide + picasso)
+
+        // ZXing barcode
+        implementation (libs.zxing.android.embedded.v430)
+         implementation (libs.zxing)
+
+    // Google services
+        implementation(libs.gms.play.services.maps)
+
+        // Preferences
+        implementation(libs.preference.ktx)
+
+        // Utils
+        implementation(libs.core)
+        implementation(libs.json)
+
+        // Testing
+        testImplementation(libs.junit)
+        androidTestImplementation(libs.ext.junit)
+        androidTestImplementation(libs.espresso.core)
+    }
 
 
 
-}
+
+
+
 
 
 

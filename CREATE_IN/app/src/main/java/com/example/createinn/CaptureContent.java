@@ -73,34 +73,27 @@ public class CaptureContent extends AppCompatActivity {
         label_name = findViewById(R.id.label_name);
         barcodeImage = findViewById(R.id.barcode_image);
 
-openScanner();
-        // Botón para ir a MainActivity
+        openScanner();
+
+        /*Implemetar navigarion y toolbar en la camara  */
         bottomNavigationItemView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
                 switch (itemId){
                     case R.id.nav_home:
-                        Intent intent = new Intent(CaptureContent.this, HandValidate.class);
+                        Intent intent = new Intent(CaptureContent.this, HandValidate.class); //corregir redireccion
                         startActivity(intent);
                         break;
-                        case R.id.nav_buscar:
-                            Intent intent2 = new Intent(CaptureContent.this, ValidateCode.class);
-                            startActivity(intent2);
-                            break;
-                            case R.id.nav_camara:
-                                ScanOptions options = new ScanOptions();
-                                options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
-                                options.setPrompt("Ponga el código en la ventana.");
-                                options.setCameraId(0);
-                                options.setOrientationLocked(false);
-                                options.setBeepEnabled(true);
-                                options.setCaptureActivity(CaptureActivityPosition.class); // para poner la camara en vertical
-                                activityResultImage.launch(options);
-                                break;
-                }
+                    case R.id.nav_buscar:
+                        Intent intent2 = new Intent(CaptureContent.this, ValidateCode.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_camara:
+                    Intent intent3 = new Intent(CaptureContent.this, CaptureContent.class);
+                    startActivity(intent3);
+                    break;
+            }
             return true;
         });
-
-
 
         // Botón para abrir cámara y escanear
         bottomNavigationItemView.setOnClickListener(v -> {
@@ -116,6 +109,7 @@ openScanner();
 
         });
     }
+
     // 1. Define el ActivityResultLauncher
     private final ActivityResultLauncher<ScanOptions> activityResultImage = registerForActivityResult(new ScanContract(),
             scanResult -> {

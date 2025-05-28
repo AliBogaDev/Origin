@@ -6,21 +6,27 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 public class MainActivity extends AppCompatActivity {
 
-    // ActivityResultLauncher que maneja el escaneo
+    private ZXingScannerView scannerView;
+    private Toolbar toolbar;
+    private BottomNavigationView bottomNavigationView;
+
     private final ActivityResultLauncher<ScanOptions> barcodeLauncher =
             registerForActivityResult(new ScanContract(), result -> {
                 if (result.getContents() != null) {
-                    // Código escaneado exitosamente, redirigir a CaptureContent
                     Intent intent = new Intent(MainActivity.this, CaptureContent.class);
                     intent.putExtra("barcode", result.getContents());
                     startActivity(intent);
-                    finish(); // cerrar MainActivity si no la necesitas después
+                    finish();
                 } else {
                     Toast.makeText(this, "Escaneo cancelado", Toast.LENGTH_SHORT).show();
                 }
@@ -31,18 +37,42 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Inmediatamente lanza el escáner al iniciar
-        openScanner();
+        // Configurar Toolbar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Origin");
+        }
+
+        // Configurar Scanner
+        scannerView = findViewById(R.id.scanner_view);
+        scannerView.setAutoFocus(true);
+
+        // Configurar Bottom Navigation
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                startActivity(new Intent(MainActivity.this, HandValidate.class)); // esto falta por arreglar
+            } else if (itemId == R.id.nav_buscar) {
+                startActivity(new Intent(MainActivity.this, ValidateCode.class));
+            } else if (itemId == R.id.nav_camara) {
+                startActivity(new Intent(MainActivity.this, CaptureContent.class));
+            }
+            return true;
+        });
+    }
+    /*implementar lectura de codigo de barras  */
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scannerView.startCamera();
     }
 
-    private void openScanner() {
-        ScanOptions options = new ScanOptions();
-        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
-        options.setPrompt("Escanea el código de barras");
-        options.setCameraId(0);
-        options.setOrientationLocked(false);
-        options.setBeepEnabled(true);
-        options.setCaptureActivity(CaptureActivityPosition.class); // si tienes una actividad personalizada
-        barcodeLauncher.launch(options);
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scannerView.stopCamera();
     }
 }
