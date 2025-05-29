@@ -2,7 +2,6 @@ package com.example.createinn;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.zxing.BarcodeFormat;
@@ -29,186 +31,135 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import androidx.activity.result.ActivityResultLauncher;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.journeyapps.barcodescanner.ScanContract;
-import com.journeyapps.barcodescanner.ScanOptions;
+
 public class CaptureContent extends AppCompatActivity {
 
     EditText result;
     TextView label_name, name, factured, country;
-    Context context = this;
     ImageView image, barcodeImage;
-    String infoProduct;
-    BottomNavigationView bottomNavigationItemView;
-
-    private void openScanner() {
-        ScanOptions options = new ScanOptions();
-        options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
-        options.setPrompt("Ponga el código en la ventana.");
-        options.setCameraId(0);
-        options.setOrientationLocked(false);
-        options.setBeepEnabled(true);
-        options.setCaptureActivity(CaptureActivityPosition.class);
-        activityResultImage.launch(options);
-    }
+    BottomNavigationView bottomNavigationView;
+    Toolbar toolbar;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_content);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Escáner de productos"); // Título personalizado
-        }
-
-
-        bottomNavigationItemView = findViewById(R.id.bottom_navigation);
-        bottomNavigationItemView.setSelectedItemId(R.id.nav_camara);
+        // Inicializar vistas
         result = findViewById(R.id.result);
+        label_name = findViewById(R.id.label_name);
         name = findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
         country = findViewById(R.id.country);
         image = findViewById(R.id.image);
-        label_name = findViewById(R.id.label_name);
         barcodeImage = findViewById(R.id.barcode_image);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        toolbar = findViewById(R.id.toolbar);
 
-        openScanner();
+        // Toolbar
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Origin");
+        }
 
-        /*Implemetar navigarion y toolbar en la camara  */
-        bottomNavigationItemView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-                switch (itemId){
-                    case R.id.nav_home:
-                        Intent intent = new Intent(CaptureContent.this, HandValidate.class); //corregir redireccion
-                        startActivity(intent);
-                        break;
-                    case R.id.nav_buscar:
-                        Intent intent2 = new Intent(CaptureContent.this, ValidateCode.class);
-                        startActivity(intent2);
-                        break;
-                    case R.id.nav_camara:
-                    Intent intent3 = new Intent(CaptureContent.this, CaptureContent.class);
-                    startActivity(intent3);
-                    break;
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.setDisplayHomeAsUpEnabled(true);
+
+        // Bottom navigation
+        bottomNavigationView.setSelectedItemId(R.id.nav_camara);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    startActivity(new Intent(CaptureContent.this, MainActivity.class));
+                    return true;
+                case R.id.nav_buscar:
+                    startActivity(new Intent(CaptureContent.this, HandValidate.class));
+                    return true;
+                case R.id.nav_camara:
+                    startActivity(new Intent(CaptureContent.this, MainActivity.class));
+                    // Ya estás en esta actividad, no hacer nada
+                    return true;
+                default:
+                    return false;
             }
-            return true;
         });
 
-        // Botón para abrir cámara y escanear
-        bottomNavigationItemView.setOnClickListener(v -> {
-            // 2. Launch the scanner using the launcher
-            ScanOptions options = new ScanOptions();
-            options.setDesiredBarcodeFormats(ScanOptions.ALL_CODE_TYPES);
-            options.setPrompt("Ponga el código en la ventana.");
-            options.setCameraId(0);
-            options.setOrientationLocked(false);
-            options.setBeepEnabled(true);
-            options.setCaptureActivity(CaptureActivityPosition.class); // para poner la camara en vertical
-            activityResultImage.launch(options);
+        // Obtener el código de barras enviado desde MainActivity
+        String barcode = getIntent().getStringExtra("barcode");
 
-        });
+        if (barcode != null && !barcode.isEmpty()) {
+            result.setText(barcode); // Mostrar código
+            generateBarcodeImage(barcode); // Generar imagen
+            queryProductInfo(barcode); // Consultar API
+        } else {
+            Toast.makeText(this, "No se recibió ningún código", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    // 1. Define el ActivityResultLauncher
-    private final ActivityResultLauncher<ScanOptions> activityResultImage = registerForActivityResult(new ScanContract(),
-            scanResult -> {
-                if (scanResult.getContents() == null) {
-                    Toast.makeText(this, "Lectura cancelada", Toast.LENGTH_SHORT).show();
-                } else {
-                    String barcode = scanResult.getContents();
-                    result.setText(barcode);
-                    Toast.makeText(this, "Código escaneado: " + barcode, Toast.LENGTH_SHORT).show();
-
-                    // Generar imagen del código de barras
-                    generateBarcodeImage(barcode);
-
-                    // Consultar API de Open Food Facts
-                    queryProductInfo(barcode);
-                }
-            });
     private void generateBarcodeImage(String barcodeText) {
         try {
-            MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-            BitMatrix bitMatrix = multiFormatWriter.encode(
-                    barcodeText,
-                    BarcodeFormat.CODE_128,
-                    600,
-                    200,
-                    java.util.Collections.singletonMap(
-                            com.google.zxing.EncodeHintType.MARGIN, 1
-                    )
-            );
-
-            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
-            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            MultiFormatWriter writer = new MultiFormatWriter();
+            BitMatrix matrix = writer.encode(barcodeText, BarcodeFormat.CODE_128, 600, 200);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
             barcodeImage.setImageBitmap(bitmap);
         } catch (WriterException e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error al generar código de barras", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error al generar la imagen", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void queryProductInfo(String barcode) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://world.openfoodfacts.org/api/v0/product/" + barcode + ".json")
-                .build();
+        String url = "https://world.openfoodfacts.org/api/v0/product/" + barcode + ".json";
+
+        Request request = new Request.Builder().url(url).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                runOnUiThread(() -> Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() ->
+                        Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show()
+                );
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    final String myResponse = response.body().string();
-                    Log.d("JSON Response", myResponse);
+                    final String jsonResponse = response.body().string();
+                    Log.d("JSON Response", jsonResponse);
 
                     runOnUiThread(() -> {
                         try {
                             Gson gson = new Gson();
-                            JsonObject json = gson.fromJson(myResponse, JsonObject.class);
+                            JsonObject json = gson.fromJson(jsonResponse, JsonObject.class);
 
                             if (json.get("status").getAsInt() == 0) {
-                                Intent intent = new Intent(CaptureContent.this, UnknownProduct.class);
-                                startActivity(intent);
+                                startActivity(new Intent(CaptureContent.this, UnknownProduct.class));
                             } else {
                                 JsonObject product = json.getAsJsonObject("product");
 
-                                // Mostrar información del producto
-                                String names = product.get("brands").getAsString();
-                                label_name.setText(names);
+                                String brand = product.has("brands") ? product.get("brands").getAsString() : "Desconocido";
+                                String productName = product.has("product_name") ? product.get("product_name").getAsString() : "Desconocido";
+                                String manufacture = product.has("manufacturing_places") ? product.get("manufacturing_places").getAsString() : "Desconocido";
+                                String countries = product.has("countries") ? product.get("countries").getAsString() : "Desconocido";
+                                String imageUrl = product.has("image_thumb_url") ? product.get("image_thumb_url").getAsString() : "";
 
-                                String productName = product.get("product_name").getAsString();
+                                label_name.setText(brand);
                                 name.setText(productName);
-
-                                String manufacturingPlaces = product.get("manufacturing_places").getAsString();
-                                factured.setText(manufacturingPlaces);
-
-                                String countries = product.get("countries").getAsString();
+                                factured.setText(manufacture);
                                 country.setText(countries);
 
-                                // Mostrar imagen del producto
-                                String imageFrontUrl = product.get("image_thumb_url").getAsString();
-                                Glide.with(context)
-                                        .load(imageFrontUrl)
-                                        .placeholder(R.drawable.camara)
-                                        .into(image);
-
-                                // Guardar información para compartir
-                                infoProduct = "Etiqueta: " + names + "\n" +
-                                        "Nombre: " + productName + "\n" +
-                                        "Producido: " + manufacturingPlaces + "\n" +
-                                        "País: " + countries;
-
-                                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putString("infoProduct", infoProduct);
-                                editor.apply();
+                                if (!imageUrl.isEmpty()) {
+                                    Glide.with(context)
+                                            .load(imageUrl)
+                                            .placeholder(R.drawable.camara)
+                                            .into(image);
+                                }
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

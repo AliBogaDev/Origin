@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.Toolbar;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -34,11 +38,20 @@ public class ValidateCode extends AppCompatActivity {
     TextView country;
     ImageView image;
     Context context=this;
+    Toolbar toolbar;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validate_code);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Origin");
+        }
+
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
@@ -121,4 +134,23 @@ public class ValidateCode extends AppCompatActivity {
             }
         });
 
-}    }
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            switch(itemId){
+                case R.id.nav_camara:
+                    startActivity(new Intent(ValidateCode.this, MainActivity.class));
+                    return true;
+                case R.id.nav_home:
+                    startActivity(new Intent(ValidateCode.this, MainActivity.class));
+                    return  true;
+                case R.id.nav_buscar:
+                    startActivity(new Intent(ValidateCode.this, HandValidate.class));
+                    return true;
+            }
+            return false;
+
+        });
+    }
+
+
+}

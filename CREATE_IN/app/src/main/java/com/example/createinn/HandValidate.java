@@ -8,11 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import androidx.appcompat.widget.Toolbar;
 
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class HandValidate extends AppCompatActivity {
@@ -20,6 +23,8 @@ public class HandValidate extends AppCompatActivity {
     Context context=this;
     Button handValidate;
     EditText code;
+    Toolbar toolbar;
+    BottomNavigationView bottomNavigationView;
 
 
 
@@ -29,12 +34,21 @@ public class HandValidate extends AppCompatActivity {
         setContentView(R.layout.hand_validate);
         code= findViewById(R.id.rellenable);
         handValidate=findViewById(R.id.button_validate);
+        bottomNavigationView=findViewById(R.id.bottom_navigation);
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+     /*   if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Origin");
+        }*/
+
 
         /*Flecha de retroceso*/
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.setDisplayHomeAsUpEnabled(true);
+
         /*boton para saltar  a validar codigo*/
         handValidate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +61,28 @@ public class HandValidate extends AppCompatActivity {
             }
         });
 
+        // Bottom navigation
+        bottomNavigationView.setSelectedItemId(R.id.nav_camara);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home:
+                    startActivity(new Intent(HandValidate.this, MainActivity.class));
+                    return true;
+                case R.id.nav_buscar:
+                    startActivity(new Intent(HandValidate.this, HandValidate.class));
+                    return true;
+                case R.id.nav_camara:
+                    startActivity(new Intent(HandValidate.this, MainActivity.class));
+                    return true;
+                default:
+                    return false;
+            }
+        });
 
-        }
+
+
+    }
+
 
 
     @Override
@@ -56,6 +90,7 @@ public class HandValidate extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
 /*Los menus se visualizan a la parte izquierda para compartir y visualizar la camara*/
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Origin.NoActionBar"
         tools:targetApi="31" >
+
         <activity
             android:name=".CaptureContent"
             android:exported="false" />
@@ -32,7 +33,7 @@
             android:parentActivityName=".CaptureContent" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CaptureContent" />
+                android:value=".MainActivity" /><!--Esto me redirige a la actividad que le indico-->
         </activity>
         <activity
             android:name=".UnknownProduct"
@@ -49,6 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Pongo una flecha de retroceso a MainActivity para que vuelva a CamaraMain() -->
+
         <activity
             android:name=".HandValidate"
             android:exported="false"
