@@ -1,31 +1,25 @@
 package com.example.createinn;
 
+import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.ResultPoint;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeCallback;
-import com.journeyapps.barcodescanner.BarcodeEncoder;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
-import com.journeyapps.barcodescanner.ScanContract;
-import com.journeyapps.barcodescanner.ScanOptions;
-
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,21 +27,23 @@ public class MainActivity extends AppCompatActivity {
     private DecoratedBarcodeView barcodeScannerView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
-    private boolean isScanningPaused = false; // Para controlar si el escaneo está pausado
+    private boolean isScanningPaused = false;
 
-    private BarcodeCallback callback = new BarcodeCallback() {
+    private final BarcodeCallback callback = new BarcodeCallback() {
         @Override
         public void barcodeResult(BarcodeResult result) {
             if (result.getText() != null && !isScanningPaused) {
-                // Pausar el escaneo para evitar múltiples detecciones y antes de navegar
                 pauseScanning();
 
+                //sonido
+                ToneGenerator toneGen = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+                toneGen.startTone(ToneGenerator.TONE_PROP_BEEP, 150);
+                //lo que envio
                 String scannedCode = result.getText();
                 Log.d("MainActivity", "Código escaneado: " + scannedCode);
                 Toast.makeText(MainActivity.this, "Escaneado: " + scannedCode, Toast.LENGTH_SHORT).show();
 
-                // Enviar a CaptureContentActivity
-                Intent intent = new Intent(MainActivity.this, CaptureContent.class); // Envio el codigo leido a CaptureContent.class
+                Intent intent = new Intent(MainActivity.this, CaptureContent.class);
                 intent.putExtra("barcode", scannedCode);
                 startActivity(intent);
             }
@@ -55,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void possibleResultPoints(List<ResultPoint> resultPoints) {
-            // Opcional: para dibujar puntos sobre posibles códigos
+            // Puntos opcionales
         }
     };
 
@@ -66,37 +62,42 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // El título se puede establecer en el XML o aquí:
-         getSupportActionBar().setTitle("Origin");
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        barcodeScannerView=findViewById(R.id.barcode_scanner_view);
-        // Configurar el escáner
-        barcodeScannerView.decodeContinuous(callback); // Para escanear continuamente
+        barcodeScannerView = findViewById(R.id.barcode_scanner_view);
 
-        // Configurar BottomNavigationView
+        // Solicitar permisos si es necesario
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 100);
+        } else {
+            startBarcodeScanner();
+        }
+
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.nav_camara) {
-                // Si el usuario está en esta pantalla (MainActivity es la de escaneo)
-                // y el escaneo estaba pausado, lo reanudamos.
                 resumeScanning();
                 return true;
             } else if (itemId == R.id.nav_home) {
-                pauseScanning(); // Pausar el escaneo antes de ir a otra actividad
-                startActivity(new Intent(MainActivity.this, MainActivity.class)); // Reemplaza con tu actividad
+                pauseScanning();
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
                 return true;
             } else if (itemId == R.id.nav_buscar) {
-                pauseScanning(); // Pausar el escaneo
-                startActivity(new Intent(MainActivity.this, HandValidate.class)); // Reemplaza con tu actividad
+                pauseScanning();
+                startActivity(new Intent(MainActivity.this, HandValidate.class));
                 return true;
             }
             return false;
         });
 
-        // Seleccionar el ítem de cámara por defecto al iniciar
-        // Esto también asegura que si se vuelve de otra actividad, la cámara se active si es necesario
         bottomNavigationView.setSelectedItemId(R.id.nav_camara);
+    }
+
+    private void startBarcodeScanner() {
+        barcodeScannerView.decodeContinuous(callback);
+        barcodeScannerView.resume();
+        isScanningPaused = false;
     }
 
     private void resumeScanning() {
@@ -118,9 +119,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Solo reanudar si el ítem de cámara está seleccionado o si es la primera vez
-        // y no está ya pausado por una navegación previa.
-        if (bottomNavigationView.getSelectedItemId() == R.id.nav_camara) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED &&
+                bottomNavigationView.getSelectedItemId() == R.id.nav_camara) {
             resumeScanning();
         }
     }
@@ -131,13 +132,16 @@ public class MainActivity extends AppCompatActivity {
         pauseScanning();
     }
 
-    // manejar los resultados de la solicitud de permisos
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // Delegar al barcodeScannerView (o a un CaptureManager si lo usaras)
-        // Esto es manejado internamente por la librería al llamar a resume() si los permisos no están.
-
-
-    }}
+        if (requestCode == 100 && grantResults.length > 0 &&
+                grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startBarcodeScanner();
+        } else {
+            Toast.makeText(this, "Permiso de cámara denegado", Toast.LENGTH_LONG).show();
+        }
+    }
+}

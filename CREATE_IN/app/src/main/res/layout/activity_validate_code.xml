@@ -8,6 +8,7 @@
     android:background="@color/ice_blue"
     tools:context=".ValidateCode">
 
+    <!-- Imagen centrada en la parte superior -->
     <ImageView
         android:id="@+id/image"
         android:layout_width="83dp"
@@ -19,64 +20,146 @@
         app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
         />
 
+    <!-- Etiqueta -->
     <TextView
         android:id="@+id/label_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textColor="@color/deep_navy"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/image"
         android:hint="Etiqueta"
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/image" />
 
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textEtiqueta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Marca: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/label_name"
+        android:layout_marginStart="16dp" />
+
+    <!-- Nombre del producto -->
     <TextView
         android:id="@+id/name_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@id/label_name"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:hint="Nombre"
-        android:visibility="visible"
+        android:hint="Nombre del producto"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/label_name" />
+
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textName_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/name_product"
+        android:layout_marginStart="16dp"/>
 
+    <!-- Lugar de fabricación -->
     <TextView
         android:id="@+id/factured_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        android:textColor="@color/deep_navy"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/name_product"
         android:hint="Lugar de fabricación"
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/name_product" />
 
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textLugarFabricación"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hecho en: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/factured_place"
+        android:layout_marginStart="16dp"/>
 
-
+    <!-- País -->
     <TextView
         android:id="@+id/country"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/factured_place"
         android:hint="País"
         android:textColor="@color/deep_navy"
-        android:textSize="25dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/factured_place" />
+
+    <!-- Texto descriptivo alineado a la izquierda -->
+    <TextView
+        android:id="@+id/textCountry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="País: "
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@id/country"
+        android:layout_marginStart="16dp"/>
+
+    <!-- Resultado del código de barras -->
+    <EditText
+        android:id="@+id/result"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:hint="Número del código de barras"
+        android:textColor="@color/deep_navy"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/country" />
+
+    <ImageView
+        android:id="@+id/barcode_image"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/country" />
+
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -99,10 +182,12 @@
         android:id="@+id/scanner_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_layout"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

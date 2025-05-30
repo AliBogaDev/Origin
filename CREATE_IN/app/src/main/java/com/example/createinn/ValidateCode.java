@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,11 +33,9 @@ import okhttp3.Response;
 
 public class ValidateCode extends AppCompatActivity {
 
-    TextView label_name;
-    TextView name;
-    TextView factured;
-    TextView country;
-    ImageView image;
+    EditText result;
+    TextView label_name, name, factured, country;
+    ImageView image, barcodeImage;;
     Context context=this;
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
@@ -58,11 +57,13 @@ public class ValidateCode extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
 
         /*Creo los huecos para alojar el producto obtenido*/
-        name= findViewById(R.id.name_product);
+        result = findViewById(R.id.result);
+        label_name = findViewById(R.id.label_name);
+        name = findViewById(R.id.name_product);
         factured = findViewById(R.id.factured_place);
-        country= findViewById(R.id.country);
-        image= findViewById(R.id.image);
-        label_name= findViewById(R.id.label_name);
+        country = findViewById(R.id.country);
+        image = findViewById(R.id.image);
+        barcodeImage = findViewById(R.id.barcode_image);
 
         /*Obtengo el número del producto que ha introducido el usuario de forma manual*/
         String codigo = getIntent().getStringExtra("codigo");

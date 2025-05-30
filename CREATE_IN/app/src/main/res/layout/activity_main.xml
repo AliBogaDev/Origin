@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Escanear Código" />
+            />
     </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Vista de la Cámara para Escanear -->
@@ -45,6 +45,6 @@
         android:background="@color/deep_navy"
         app:itemTextColor="@color/color_item_nav"
         app:itemIconTint="@color/color_item_nav"
-        app:menu="@menu/botton_nav_view" /> <!-- Asegúrate que res/menu/bottom_nav_menu.xml exista -->
+        app:menu="@menu/botton_nav_view" /> <!-- res/menu/bottom_nav_menu.xml exista -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
