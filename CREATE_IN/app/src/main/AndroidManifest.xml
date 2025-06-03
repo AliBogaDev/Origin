@@ -54,7 +54,7 @@
         <activity
             android:name=".HandValidate"
             android:exported="false"
-            android:parentActivityName=".CaptureContent" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CaptureContent" />

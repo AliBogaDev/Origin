@@ -2,12 +2,15 @@ package com.example.createinn;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 
@@ -38,9 +41,6 @@ public class HandValidate extends AppCompatActivity {
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-     /*   if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Origin");
-        }*/
 
 
         /*Flecha de retroceso*/
@@ -54,8 +54,8 @@ public class HandValidate extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String takeCode = code.getText().toString();
-                Intent intent = new Intent(HandValidate.this,ValidateCode.class);
-                intent.putExtra("codigo",takeCode);
+                Intent intent = new Intent(HandValidate.this,CaptureContent.class);
+                intent.putExtra("barcode",takeCode);
                 startActivity(intent);
 
             }
@@ -85,30 +85,6 @@ public class HandValidate extends AppCompatActivity {
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-/*Los menus se visualizan a la parte izquierda para compartir y visualizar la camara*/
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.camera:
-                Intent camera = new Intent(HandValidate.this, CaptureContent.class);
-                startActivity(camera);
-                break;
-
-            case R.id.share:
-                Intent share = new Intent(HandValidate.this, Contacts.class);
-                startActivity(share);
-                break;
-
-        }
-        return super.onOptionsItemSelected(item);
-
-    }
 
 
 

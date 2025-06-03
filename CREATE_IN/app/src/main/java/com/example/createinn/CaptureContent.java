@@ -2,14 +2,18 @@ package com.example.createinn;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -46,7 +50,6 @@ public class CaptureContent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.capture_content);
 
-        // Inicializar vistas
         result = findViewById(R.id.result);
         label_name = findViewById(R.id.label_name);
         name = findViewById(R.id.name_product);
@@ -57,19 +60,15 @@ public class CaptureContent extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         toolbar = findViewById(R.id.toolbar);
 
-        // Toolbar
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Origin");
         }
 
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) actionBar.setDisplayHomeAsUpEnabled(true);
 
-        // Bottom navigation
         bottomNavigationView.setSelectedItemId(R.id.nav_camara);
-
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.nav_home:
@@ -80,23 +79,54 @@ public class CaptureContent extends AppCompatActivity {
                     return true;
                 case R.id.nav_camara:
                     startActivity(new Intent(CaptureContent.this, MainActivity.class));
-                    // Ya estás en esta actividad, no hacer nada
                     return true;
                 default:
                     return false;
             }
         });
 
-        // Obtener el código de barras enviado desde MainActivity
         String barcode = getIntent().getStringExtra("barcode");
 
         if (barcode != null && !barcode.isEmpty()) {
-            result.setText(barcode); // Mostrar código
-            generateBarcodeImage(barcode); // Generar imagen
-            queryProductInfo(barcode); // Consultar API
+            result.setText(barcode);
+            generateBarcodeImage(barcode);
+            queryProductInfo(barcode);
         } else {
             Toast.makeText(this, "No se recibió ningún código", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.camera:
+                startActivity(new Intent(CaptureContent.this, MainActivity.class));
+                break;
+
+            case R.id.share:
+                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                String shareUrl = sharedPref.getString("shareUrl", "https://es.openfoodfacts.org/");
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Consulta este producto");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareUrl);
+
+                Intent chooser = Intent.createChooser(shareIntent, "Compartir con");
+                if (shareIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(chooser);
+                } else {
+                    Toast.makeText(this, "No hay aplicaciones para compartir.", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void generateBarcodeImage(String barcodeText) {
@@ -144,7 +174,7 @@ public class CaptureContent extends AppCompatActivity {
                                 JsonObject product = json.getAsJsonObject("product");
 
                                 String brand = product.has("brands") ? product.get("brands").getAsString() : "Desconocido";
-                                String productName = product.has("product_name") ? product.get("product_name").getAsString() : "Desconocido";
+                                String productName = product.has("product_name") ? product.get("product_name").getAsString() : "producto-desconocido";
                                 String manufacture = product.has("manufacturing_places") ? product.get("manufacturing_places").getAsString() : "Desconocido";
                                 String countries = product.has("countries") ? product.get("countries").getAsString() : "Desconocido";
                                 String imageUrl = product.has("image_thumb_url") ? product.get("image_thumb_url").getAsString() : "";
@@ -160,6 +190,20 @@ public class CaptureContent extends AppCompatActivity {
                                             .placeholder(R.drawable.camara)
                                             .into(image);
                                 }
+
+                                // Generar slug del nombre
+                                String slugName = productName.toLowerCase()
+                                        .replace(" ", "-")
+                                        .replaceAll("[^a-z0-9\\-]", "");
+
+                                // Crear enlace compartible
+                                String shareUrl = "https://es.openfoodfacts.org/producto/" + barcode + "/" + slugName;
+
+                                // Guardar en SharedPreferences
+                                SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putString("shareUrl", shareUrl);
+                                editor.apply();
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
