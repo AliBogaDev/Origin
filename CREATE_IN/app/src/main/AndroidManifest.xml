@@ -39,7 +39,7 @@
             android:name=".UnknownProduct"
             android:exported="false" />
         <activity
-            android:name=".Contacts"
+            android:name=".Favorite"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

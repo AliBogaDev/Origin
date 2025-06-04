@@ -22,6 +22,7 @@ public class UnknownProduct extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unknown_product);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -37,10 +38,10 @@ public class UnknownProduct extends AppCompatActivity {
                     startActivity(new Intent(UnknownProduct.this, CaptureContent.class));
                     break;
                 case R.id.nav_home:
-                    startActivity(new Intent(UnknownProduct.this, HandValidate.class));
+                    startActivity(new Intent(UnknownProduct.this, CaptureContent.class));
                     break;
                 case R.id.nav_buscar:
-                    startActivity(new Intent(UnknownProduct.this, ValidateCode.class));
+                    startActivity(new Intent(UnknownProduct.this, HandValidate.class));
                     break;
             }
             return true;

@@ -8,16 +8,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class Contacts extends AppCompatActivity {
+public class Favorite extends AppCompatActivity {
 
     ImageButton sendInformation;
     Toolbar toolbar;
@@ -39,33 +35,19 @@ public class Contacts extends AppCompatActivity {
         }
 
 
-        SharedPreferences sharedPref = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        final String infoProduct = sharedPref.getString("infoProduct", "");
 
-        sendInformation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/html");
-                intent.putExtra(Intent.EXTRA_SUBJECT,"Información importante!.");
-                intent.putExtra(Intent.EXTRA_TEXT ,"Mi web: <a href='https://es.openfoodfacts.org/' >Leer</a>"+infoProduct);
-                intent.setPackage("com.whatsapp");
-                startActivity(intent);
-
-            }
-        });
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             switch(itemId){
                 case R.id.nav_camara:
-                    startActivity(new Intent(Contacts.this, MainActivity.class));
+                    startActivity(new Intent(Favorite.this, MainActivity.class));
                     return true;
                 case R.id.nav_home:
-                    startActivity(new Intent(Contacts.this, MainActivity.class));
+                    startActivity(new Intent(Favorite.this, MainActivity.class));
                     return true;
                 case R.id.nav_buscar:
-                    startActivity(new Intent(Contacts.this, HandValidate.class));
+                    startActivity(new Intent(Favorite.this, HandValidate.class));
                     return true;
             }
             return false;

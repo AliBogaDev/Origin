@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -214,4 +215,26 @@ public class CaptureContent extends AppCompatActivity {
             }
         });
     }
+
+    // --- Método  para manejar el retroceso ---
+    private void setupBackPressedCallback() {
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Lógica personalizada aquí
+                navigateToMainActivity();
+            }
+        });
+    }
+
+    // --- Método para redirigir a MainActivity, reescribiendo el calback ---
+    private void navigateToMainActivity() {
+        Intent intent = new Intent(CaptureContent.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
+
+
