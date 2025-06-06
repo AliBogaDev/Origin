@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.nav_camara) {
                 resumeScanning();
                 return true;
-            } else if (itemId == R.id.nav_home) {
+            } else if (itemId == R.id.nav_favoritos) {
                 pauseScanning();
-                startActivity(new Intent(MainActivity.this, MainActivity.class));
+                startActivity(new Intent(MainActivity.this, Favorite.class));
                 return true;
             } else if (itemId == R.id.nav_buscar) {
                 pauseScanning();

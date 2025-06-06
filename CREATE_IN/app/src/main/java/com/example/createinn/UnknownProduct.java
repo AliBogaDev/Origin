@@ -35,10 +35,10 @@ public class UnknownProduct extends AppCompatActivity {
             int itemId = item.getItemId();
             switch(itemId){
                 case R.id.nav_camara:
-                    startActivity(new Intent(UnknownProduct.this, CaptureContent.class));
+                    startActivity(new Intent(UnknownProduct.this, MainActivity.class));
                     break;
-                case R.id.nav_home:
-                    startActivity(new Intent(UnknownProduct.this, CaptureContent.class));
+                case R.id.nav_favoritos:
+                    startActivity(new Intent(UnknownProduct.this, Favorite.class));
                     break;
                 case R.id.nav_buscar:
                     startActivity(new Intent(UnknownProduct.this, HandValidate.class));

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -35,8 +36,9 @@ public class ValidateCode extends AppCompatActivity {
 
     EditText result;
     TextView label_name, name, factured, country;
-    ImageView image, barcodeImage;;
-    Context context=this;
+    ImageView image, barcodeImage;
+    ;
+    Context context = this;
     Toolbar toolbar;
     BottomNavigationView bottomNavigationView;
 
@@ -72,12 +74,13 @@ public class ValidateCode extends AppCompatActivity {
         }
 
     }
+
     /*Método para procesar la obtención de respuesta por medio del codigo*/
     public void procesarCodigo(String codigo) {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url( "https://world.openfoodfacts.org/api/v0/product/"+codigo+".json").build();
+                .url("https://world.openfoodfacts.org/api/v0/product/" + codigo + ".json").build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -99,12 +102,13 @@ public class ValidateCode extends AppCompatActivity {
                                 Gson gson = new Gson();
                                 JsonObject json = gson.fromJson(myResponse, JsonObject.class);
                                 JsonObject product = json.getAsJsonObject("product");
-                                /*Compruebo que el producto exista*/
-                                if(json.get("status").getAsInt() == 0) {
-                                    Intent intent = new  Intent(ValidateCode.this,UnknownProduct.class);
+
+                                //*--Compruebo que el producto exista--*/
+                                if (json.get("status").getAsInt() == 0) {
+                                    Intent intent = new Intent(ValidateCode.this, UnknownProduct.class);
                                     startActivity(intent);
 
-                                } else{
+                                } else {
                                     /*Aquí leo los datos que voy a mostrar del json obtenido por la lectura del codigo de barras*/
                                     String names = product.get("brands").getAsString();
                                     label_name.setText(names);
@@ -126,6 +130,8 @@ public class ValidateCode extends AppCompatActivity {
                                             .into(image);
                                 }
                             } catch (Exception e) {
+                                //muestro un toast para saber el error
+                                Toast.makeText(context,"Error al procesar codigo!", Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
@@ -135,23 +141,24 @@ public class ValidateCode extends AppCompatActivity {
             }
         });
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            switch(itemId){
-                case R.id.nav_camara:
-                    startActivity(new Intent(ValidateCode.this, MainActivity.class));
-                    return true;
-                case R.id.nav_home:
-                    startActivity(new Intent(ValidateCode.this, MainActivity.class));
-                    return  true;
-                case R.id.nav_buscar:
-                    startActivity(new Intent(ValidateCode.this, HandValidate.class));
-                    return true;
-            }
-            return false;
 
-        });
-    }
+        bottomNavigationView.setOnItemSelectedListener(item ->  {
 
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.nav_camara:
+                startActivity(new Intent(ValidateCode.this, MainActivity.class));
+                return true;
+            case R.id.nav_favoritos:
+                startActivity(new Intent(ValidateCode.this, Favorite.class));
+                return true;
+            case R.id.nav_buscar:
+                startActivity(new Intent(ValidateCode.this, HandValidate.class));
+                return true;
+        }
+        return false;
 
+    });
+
+}
 }

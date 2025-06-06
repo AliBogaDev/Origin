@@ -71,8 +71,8 @@ public class HandValidate extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.nav_camara);
         bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
-                case R.id.nav_home:
-                    startActivity(new Intent(HandValidate.this, MainActivity.class));
+                case R.id.nav_favoritos:
+                    startActivity(new Intent(HandValidate.this, Favorite.class));
                     return true;
                 case R.id.nav_buscar:
                     startActivity(new Intent(HandValidate.this, HandValidate.class));
@@ -87,7 +87,7 @@ public class HandValidate extends AppCompatActivity {
 
 
     }
-//mirar a ver cuando se hecha para atras con el teclaso de abajo del telefono que vuelve al lado que no quiero
+//llamada a la api para comprobar existencia de producto
     private void checkProductExists(String barcode) {
         OkHttpClient client = new OkHttpClient();
         String url = "https://world.openfoodfacts.org/api/v0/product/" + barcode + ".json";
