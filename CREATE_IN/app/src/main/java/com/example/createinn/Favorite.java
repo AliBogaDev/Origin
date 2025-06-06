@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,9 +31,11 @@ public class Favorite extends AppCompatActivity {
  /*Actividad  para compartir los datos obtenidos de la api*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 
+        setupBackPressedCallback();
     //    sendInformation=(ImageButton)findViewById(R.id.send_information);
         bottomNavigationView= findViewById(R.id.bottom_navigation);
 
@@ -55,6 +59,10 @@ public class Favorite extends AppCompatActivity {
                 }).start();
             });
             recyclerView.setAdapter(adapter);
+//esto esta por arreglar tengo que ponerlo bonito---pendienteª"""!!!
+            DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            divider.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider_round)); // Usa tu drawable per
+            recyclerView.addItemDecoration(divider);
         });
 
         bottomNavigationView.setOnItemSelectedListener(item -> {

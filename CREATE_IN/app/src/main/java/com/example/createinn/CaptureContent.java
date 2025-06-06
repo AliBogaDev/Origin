@@ -222,6 +222,7 @@ public class CaptureContent extends AppCompatActivity {
     }
 
     private void displayProductInfo(JsonObject product) {
+        //obtengo y lo guardo!
         String brand = product.has("brands") ? product.get("brands").getAsString() : "Desconocido";
         String productName = product.has("product_name") ? product.get("product_name").getAsString() : "producto-desconocido";
         String manufacture = product.has("manufacturing_places") ? product.get("manufacturing_places").getAsString() : "Desconocido";
@@ -258,19 +259,53 @@ public class CaptureContent extends AppCompatActivity {
 
     private void setupSaveButton(JsonObject product) {
         guardar.setOnClickListener(v -> {
-            String imageUrl = product.has("image_thumb_url") ? product.get("image_thumb_url").getAsString() : "";
+            try {
+                // Obtener todos los datos directamente del JSON para consistencia
+                String imageUrl = product.has("image_thumb_url") ?
+                        product.get("image_thumb_url").getAsString() :
+                        (product.has("image_url") ? product.get("image_url").getAsString() : "");
 
+                String brand = product.has("brands") ?
+                        product.get("brands").getAsString() :
+                        "Desconocido";
 
-            FavoritProduct favoritProduct = new FavoritProduct(
-                    0,
-                    label_name.getText().toString(),
-                    name.getText().toString(),
-                    factured.getText().toString(),
-                    imageUrl,
-                    country.getText().toString()
-            );
+                String productName = product.has("product_name") ?
+                        product.get("product_name").getAsString() :
+                        (product.has("product_name_es") ? product.get("product_name_es").getAsString() : "producto-desconocido");
 
-            saveFavoriteProduct(favoritProduct);
+                String manufacture = product.has("manufacturing_places") ?
+                        product.get("manufacturing_places").getAsString() :
+                        "Desconocido";
+
+                String countries = product.has("countries") ?
+                        product.get("countries").getAsString() :
+                        "Desconocido";
+
+                // Verificar datos mínimos requeridos
+                if (brand.equals("Desconocido") && productName.equals("producto-desconocido")) {
+                    Toast.makeText(this, "Datos insuficientes para guardar", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Crear objeto con TODOS los datos obtenidos del JSON
+                FavoritProduct favoritProduct = new FavoritProduct(
+                        0, // ID se auto-generará
+                        brand,
+                        productName,
+                        manufacture,
+                        imageUrl,
+                        countries
+                );
+
+                // Depuración: Ver qué se va a guardar
+                Log.d("GUARDANDO", "Producto: " + favoritProduct.toString());
+
+                saveFavoriteProduct(favoritProduct);
+
+            } catch (Exception e) {
+                Log.e("SAVE_ERROR", "Error al guardar producto", e);
+                Toast.makeText(this, "Error al guardar el producto", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 
@@ -286,11 +321,11 @@ public class CaptureContent extends AppCompatActivity {
                     new Thread(() -> {
                         dao.insert(favoritProduct);
                         runOnUiThread(() ->
-                                Toast.makeText(CaptureContent.this, "✅ Guardado", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(CaptureContent.this, " Guardado", Toast.LENGTH_SHORT).show()
                         );
                     }).start();
                 } else {
-                    Toast.makeText(CaptureContent.this, "⚠️ Ya existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CaptureContent.this, " Ya existe", Toast.LENGTH_SHORT).show();
                 }
             });
         }).start();

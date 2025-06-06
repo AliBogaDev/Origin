@@ -1,5 +1,6 @@
 package com.example.createinn.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +44,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
      FavoritProduct product = favorites.get(position);
+     //esto solo es para probar
+        Log.d("FAVORITE_ADAPTER", "Producto: " + product.getNombre() + ", Imagen: " + product.getImagenUrl());
         holder.marca.setText(product.getMarca());
         holder.nombre.setText(product.getNombre());
         holder.hechoEn.setText(product.getHechoEn());

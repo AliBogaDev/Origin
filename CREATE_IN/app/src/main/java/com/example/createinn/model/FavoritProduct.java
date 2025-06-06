@@ -22,6 +22,8 @@ public class FavoritProduct {
         this.pais = pais;
     }
 
+    public  FavoritProduct(){}
+
     public int getId() {
         return id;
     }

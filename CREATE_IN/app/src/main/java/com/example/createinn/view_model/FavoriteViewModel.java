@@ -19,7 +19,7 @@ public class FavoriteViewModel extends AndroidViewModel {
     public FavoriteViewModel(@NonNull Application application) {
         super(application);
         AppDatabase db = AppDatabase.getInstance(application);
-        productFavoriteDao = db.productFavoritDao();  // ✅ Aquí lo inicializas
+        productFavoriteDao = db.productFavoritDao();  // Aquí lo inicializo
         allFavorites = productFavoriteDao.getAllFavorites();
     }
 
